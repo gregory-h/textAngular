@@ -1086,12 +1086,12 @@ angular.module('textAngular.factories', [])
 		else if(tag === '') return (_browserDetect.ie === undefined)? 'div' : (_browserDetect.ie <= 8)? 'P' : 'p';
 		else return (_browserDetect.ie <= 8)? tag.toUpperCase() : tag;
 	};
-}]).factory('taApplyCustomRenderers', ['taCustomRenderers', 'taDOM', function(taCustomRenderers, taDOM){
-	return function(val){
+}]).factory('taApplyCustomRenderers', ['taCustomRenderers', 'taDOM', function(taCustomRenderers, taDOM, filterFn){
+	return function(val,filterFn){
 		var element = angular.element('<div></div>');
 		element[0].innerHTML = val;
-
-		angular.forEach(taCustomRenderers, function(renderer){
+		var renderers = (filterFn)? taCustomRenderers.filter(filterFn) : taCustomRenderers;
+		angular.forEach(renderers, function(renderer){
 			var elements = [];
 			// get elements based on what is defined. If both defined do secondary filter in the forEach after using selector string
 			if(renderer.selector && renderer.selector !== '')
