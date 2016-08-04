@@ -727,7 +727,10 @@ angular.module('textAngularSetup', [])
 			var $editor = this.$editor();
 			var recursiveRemoveClass = function(node){
 				node = angular.element(node);
-				if(node[0] !== $editor.displayElements.text[0]) node.removeAttr('class');
+				/* istanbul ignore next: this is not triggered in tests any longer since we now never select the whole displayELement */
+				if(node[0] !== $editor.displayElements.text[0]) {
+					node.removeAttr('class');
+				}
 				angular.forEach(node.children(), recursiveRemoveClass);
 			};
 			angular.forEach(possibleNodes, recursiveRemoveClass);
@@ -895,7 +898,7 @@ angular.module('textAngularSetup', [])
 @license textAngular
 Author : Austin Anderson
 License : 2013 MIT
-Version 1.5.3
+Version 1.5.4
 
 See README.md or https://github.com/fraywing/textAngular/wiki for requirements and use.
 */
